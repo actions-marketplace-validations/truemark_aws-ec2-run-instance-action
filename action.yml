@@ -1,6 +1,9 @@
 name: 'AWS EC2 Run Instance'
 description: 'Creates and runs an EC2 instance'
 author: 'TrueMark'
+branding:
+  icon: 'check-circle'
+  color: 'red'
 inputs:
   subnet-id:
     required: true
@@ -45,6 +48,10 @@ inputs:
     required: false
     description: 'Terminate the EC2 instance after the post step'
     default: 'true'
+  name:
+    required: false
+    description: 'Name of the EC2 instance to be added to the tags'
+    default: ${{ github.event.repository.name }}-${{github.run_number}}
 outputs:
   instance-id:
     description: 'The instance ID of the EC2 instance'
@@ -52,3 +59,4 @@ runs:
   using: 'node16'
   main: 'dist/index.js'
   post: 'dist/index.js'
+  post-if: 'always()' # Always run the post step

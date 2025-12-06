@@ -8,8 +8,12 @@ import {loadConfig} from './config'
 async function run(): Promise<void> {
   try {
     const config = loadConfig()
-    const ssmClient = new SSMClient({region: config.region})
-    const ec2Client = new EC2Client({region: config.region})
+    const tags = config.tags ?? {}
+    if (tags['Name'] === undefined) {
+      tags['Name'] = config.name
+    }
+    const ssmClient = new SSMClient({region: config.region, maxAttempts: 5, retryMode: 'adaptive'})
+    const ec2Client = new EC2Client({region: config.region, maxAttempts: 5, retryMode: 'adaptive'})
     if (process.env['STATE_isPost'] === 'true') {
       // post
       if (config.terminateOnPost) {
@@ -38,7 +42,7 @@ async function run(): Promise<void> {
         associatePublicIpAddress: config.associatePublicIpAddress,
         subnetId: config.subnetId,
         keyName: config.keyName,
-        tags: config.tags,
+        tags,
         userData: config.userData,
         instanceShutdownBehavior: config.instanceShutdownBehavior,
         instanceProfile: config.instanceProfile

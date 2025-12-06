@@ -4,10 +4,7 @@
 [![Latest Release](https://img.shields.io/github/v/release/truemark/aws-ec2-run-instance-action)](https://github.com/truemark/aws-ec2-run-instance-action/releases)
 ![GitHub closed issues](https://img.shields.io/github/issues-closed/truemark/aws-ec2-run-instance-action)
 ![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/truemark/aws-ec2-run-instance-action)
-
-<p>
-  <a href="https://github.com/truemark/aws-ec2-run-instance-action"><img alt="typescript-action status" src="https://github.com/truemark/aws-ec2-run-instance-action/workflows/build-test/badge.svg"></a>
-</p>
+![build-test](https://github.com/truemark/aws-ec2-run-instance-action/workflows/build-test/badge.svg)
 
 This action will create and run an AWS EC2 instance and then optionally terminate it as a post step.
 
@@ -26,7 +23,7 @@ This action will create and run an AWS EC2 instance and then optionally terminat
           aws-region: "us-east-2"
       - name: Setup ARM64 EC2
         id: ec2-arm64
-        uses: truemark/aws-ec2-run-instance-action@v2
+        uses: truemark/aws-ec2-run-instance-action@v5
         with:
           security-group-id: "sg-0baf5bcfe9f21efa0"
           subnet-id: "subnet-09a35a2abd797dbf0"
@@ -59,6 +56,7 @@ You can also use the AMI ID of your own AMI.
 | region                        | string     | Yes      | AWS region to use for the EC2 instance                                                      |
 | key-name                      | string     | No       | SSH key name to use for the EC2 instance                                                    |
 | terminate-on-post             | boolean    | No       | Terminate the EC2 instance after the post step. Default is true.                            |
+| name                          | string     | No       | Name to use for the EC2 instance. Default is repository name and run number                 |
 
 ## Outputs
 | Name                          | Type       | Description                                                                                 |
